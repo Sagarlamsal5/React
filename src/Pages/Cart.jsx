@@ -1,13 +1,52 @@
 import React,{useState,useEffect} from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Cart = () => {
-    const[product,setproduct] = useState([])
+    const[product,setProduct] = useState([])
 useEffect(()=>{
     const data = JSON.parse(localStorage.getItem("cartData")) 
-    setproduct(data)
+    setProduct(data)
    
 })
-    console.log(product)
+  const increase = id =>{
+    const updateproduct = product.map(item=>{
+      if(item.id ===id){
+        return{
+          ...item,quantity:item.quantity+1
+        }
+      }
+      return item
+    })
+    setProduct(updateproduct)
+    localStorage.setItem('cartData',JSON.stringify(updateproduct))
+  }
+
+  const decrease = id =>{
+    const updateproduct = product.map(item=>{
+      if(item.id ===id && item.quantity>1){
+        return{
+          ...item,quantity:item.quantity-1
+        }
+      }
+      return item
+    })
+    setProduct(updateproduct)
+    localStorage.setItem('cartData',JSON.stringify(updateproduct))
+  }
+
+   // for remove items
+   const remove =(id,name)=>{
+    const confirmed = window.confirm("Are you sure want to delete ?")
+    if(confirmed){
+      const filtercart = product.filter(item=>item.id!=id)
+      localStorage.setItem('cartData', JSON.stringify(filtercart))
+      setProduct(filtercart)
+      toast.error(`${name} is removed`)
+      
+    }
+  }
   return (
     <>
     <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
@@ -31,13 +70,13 @@ useEffect(()=>{
                  <label for="counter-input" class="sr-only">Choose quantity:</label>
                  <div class="flex items-center justify-between md:order-3 md:justify-end">
                    <div class="flex items-center">
-                     <button type="button" id="decrement-button" data-input-counter-decrement="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                     <button type="button"  class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"onClick={()=>decrease(item.id)}>
                        <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                        </svg>
                      </button>
                      <input type="text" id="counter-input" data-input-counter class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value={item.quantity} required />
-                     <button type="button" id="increment-button" data-input-counter-increment="counter-input" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                     <button type="button"class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"onClick={()=>increase(item.id)}>
                        <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                        </svg>
@@ -59,7 +98,9 @@ useEffect(()=>{
                        Add to Favorites
                      </button>
    
-                     <button type="button" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
+                     <button type="button" class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500"
+                       onClick={()=>remove(item.id, item.title)}>
+                    
                        <svg class="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                        </svg>
