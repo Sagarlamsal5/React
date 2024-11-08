@@ -15,7 +15,7 @@ useEffect(()=>{
  axios.get(`https://fakestoreapi.com/products/${id}`)
   .then(res=>setProduct(res.data))
   .catch(err=>console.log(err))
-},[])
+              },[])
 
   const addtocart=()=>{
     const cartItems =JSON.parse(localStorage.getItem(`cartData`)) || []

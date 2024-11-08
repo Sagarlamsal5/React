@@ -7,6 +7,7 @@ import Homepage from './Pages/Homepage'
 import Productpage from './Pages/Productpage'
 import ProductDetail from './Pages/ProductDetail'
 import Cart from './Pages/Cart'
+import Register from './Pages/Register'
 const Myroute = () => {
   return (
     <>
@@ -20,6 +21,8 @@ const Myroute = () => {
             <Route path='product'element={<Productpage/>}/>
             <Route path='productdetail/:productId' element={<ProductDetail/>}/>
             <Route path='cart'element={<Cart/>}/>
+              <Route path='/register'element={<Register/>}/>
+
             </Route>
         </Routes>
     </Router>

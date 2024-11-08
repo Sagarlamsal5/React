@@ -53,11 +53,11 @@ useEffect(()=>{
   <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
     <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Shopping Cart</h2>
 
-    <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-      <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
+    <div class="mt-6 ml-96 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
+      <div class="mx-auto  flex-none lg:max-w-2xl xl:max-w-4xl">
         <div class="space-y-6">
           {product.length == 0 ?
-         <h1 className='text-center'>YOur cart is empty</h1> :(
+         <h1 className="stext-center text-amber-400 bg-red-500 font-bold h-[40px] w-[300px] pt-1">Your cart is empty</h1> :(
           <>
               {product.map((item,i)=>(
                <div key={i}  class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
